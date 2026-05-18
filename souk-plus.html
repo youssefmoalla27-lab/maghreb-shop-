@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سوق Souk+ — Marketplace Maghreb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #FBF7F0;
+    color: #2C1A0E;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: #C8410B;
+    color: white;
+    text-align: center;
+    padding: 7px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+
+  nav {
+    background: #1A1005;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    height: 60px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: #F2B04A;
+    letter-spacing: -0.5px;
+    margin-right: 16px;
+    white-space: nowrap;
+  }
+
+  .logo span { color: #E8E0D0; }
+
+  .search-bar {
+    flex: 1;
+    display: flex;
+    max-width: 520px;
+  }
+
+  .search-bar input {
+    flex: 1;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 6px 0 0 6px;
+    font-size: 14px;
+    background: #FBF7F0;
+    color: #2C1A0E;
+    outline: none;
+  }
+
+  .search-bar button {
+    background: #F2B04A;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .nav-links {
+    margin-left: auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .nav-links a {
+    color: #E8E0D0;
+    text-decoration: none;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .nav-cart {
+    background: #C8410B;
+    color: white;
+    border: none;
+    padding: 7px 14px;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .category-bar {
+    background: #2C1A0E;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    padding: 0 24px;
+  }
+
+  .category-bar button {
+    background: none;
+    border: none;
+    color: #C8B49A;
+    padding: 11px 18px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: 'DM Sans', sans-serif;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s;
+  }
+
+  .category-bar button.active,
+  .category-bar button:hover {
+    color: #F2B04A;
+    border-bottom: 2px solid #F2B04A;
+  }
+
+  .hero {
+    background: linear-gradient(135deg, #1A1005 0%, #3D2510 50%, #7A3D12 100%);
+    padding: 36px 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '🌙';
+    position: absolute;
+    right: 120px;
+    top: 20px;
+    font-size: 64px;
+    opacity: 0.12;
+  }
+
+  .hero::after {
+    content: '⭐';
+    position: absolute;
+    right: 60px;
+    bottom: 20px;
+    font-size: 40px;
+    opacity: 0.1;
+  }
+
+  .hero-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    color: #F2B04A;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .hero-text p {
+    color: #C8B49A;
+    font-size: 15px;
+    margin-bottom: 18px;
+    max-width: 380px;
+  }
+
+  .hero-btn {
+    background: #C8410B;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .hero-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  .badge-card {
+    background: rgba(242,176,74,0.1);
+    border: 1px solid rgba(242,176,74,0.3);
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .badge-card .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #F2B04A;
+  }
+
+  .badge-card .lbl {
+    font-size: 11px;
+    color: #C8B49A;
+    margin-top: 2px;
+  }
+
+  .section {
+    padding: 28px 24px 16px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #2C1A0E;
+  }
+
+  .see-all {
+    font-size: 13px;
+    color: #C8410B;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+    gap: 14px;
+  }
+
+  .product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #EDE3D6;
+    cursor: pointer;
+    transition: transform 0.18s, box-shadow 0.18s;
+    position: relative;
+  }
+
+  .product-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(44,26,14,0.12);
+  }
+
+  .product-img {
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 52px;
+    background: #F9F3EB;
+    position: relative;
+  }
+
+  .product-country {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 18px;
+  }
+
+  .product-fav {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+
+  .product-fav:hover { transform: scale(1.25); }
+
+  .product-info {
+    padding: 10px 12px 12px;
+  }
+
+  .product-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #2C1A0E;
+    margin-bottom: 3px;
+    line-height: 1.3;
+  }
+
+  .product-seller {
+    font-size: 11px;
+    color: #9A7D62;
+    margin-bottom: 6px;
+  }
+
+  .product-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+  }
+
+  .product-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: #C8410B;
+    font-weight: 700;
+  }
+
+  .product-currency {
+    font-size: 11px;
+    color: #9A7D62;
+  }
+
+  .add-btn {
+    background: #C8410B;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s;
+  }
+
+  .add-btn:hover { background: #A53408; }
+
+  .badge-new {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #C8410B;
+    color: white;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .badge-promo {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #2C7A1A;
+    color: white;
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .stars {
+    font-size: 11px;
+    color: #F2B04A;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+  }
+
+  .divider {
+    height: 1px;
+    background: #EDE3D6;
+    margin: 8px 24px;
+  }
+
+  .banners {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 0 24px 20px;
+  }
+
+  .banner {
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .banner.maroc { background: #1A4D2E; color: white; }
+  .banner.algerie { background: #1C3A6B; color: white; }
+
+  .banner h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .banner p {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-bottom: 12px;
+  }
+
+  .banner-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 7px 16px;
+    border-radius: 5px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .banner-emoji {
+    position: absolute;
+    right: 16px;
+    bottom: 12px;
+    font-size: 40px;
+    opacity: 0.5;
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    padding: 0 0 16px;
+    flex-wrap: wrap;
+  }
+
+  .filter-chip {
+    background: white;
+    border: 1px solid #EDE3D6;
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+    cursor: pointer;
+    color: #5A3A20;
+    transition: all 0.15s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .filter-chip.active,
+  .filter-chip:hover {
+    background: #C8410B;
+    color: white;
+    border-color: #C8410B;
+  }
+
+  .cart-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1A1005;
+    color: #F2B04A;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .cart-toast.show { opacity: 1; }
+
+  .footer {
+    background: #1A1005;
+    color: #9A7D62;
+    text-align: center;
+    padding: 18px;
+    font-size: 12px;
+    margin-top: 24px;
+  }
+
+  .footer strong { color: #F2B04A; }
+
+  @media (max-width: 600px) {
+    .hero { flex-direction: column; }
+    .hero-badges { flex-direction: row; margin-left: 0; }
+    .banners { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">🚚 Livraison gratuite dès 500 MAD / 3000 DA &nbsp;·&nbsp; Paiement sécurisé &nbsp;·&nbsp; Retour 30 jours</div>
+
+<nav>
+  <div class="logo">سوق <span>Souk+</span></div>
+  <div class="search-bar">
+    <input type="text" placeholder="Chercher un produit, un artisan..." />
+    <button>🔍</button>
+  </div>
+  <div class="nav-links">
+    <a>🇲🇦 Maroc</a>
+    <a>🇩🇿 Algérie</a>
+    <a>❤️ Favoris</a>
+    <button class="nav-cart" id="cartBtn">🛒 Panier (0)</button>
+  </div>
+</nav>
+
+<div class="category-bar">
+  <button class="active" onclick="filterCat('all', this)">Tout</button>
+  <button onclick="filterCat('artisanat', this)">🏺 Artisanat</button>
+  <button onclick="filterCat('mode', this)">👗 Mode & Vêtements</button>
+  <button onclick="filterCat('epicerie', this)">🫙 Épicerie fine</button>
+  <button onclick="filterCat('bijoux', this)">💍 Bijoux</button>
+  <button onclick="filterCat('maison', this)">🛋️ Maison & Déco</button>
+  <button onclick="filterCat('beaute', this)">🌿 Beauté naturelle</button>
+</div>
+
+<div class="hero">
+  <div class="hero-text">
+    <h1>L'artisanat du Maghreb,<br>livré chez vous</h1>
+    <p>Des milliers d'artisans marocains et algériens vous proposent leurs créations authentiques. Achetez local, consommez authentique.</p>
+    <button class="hero-btn">Découvrir les créateurs</button>
+  </div>
+  <div class="hero-badges">
+    <div class="badge-card">
+      <div class="num">12 400</div>
+      <div class="lbl">Produits</div>
+    </div>
+    <div class="badge-card">
+      <div class="num">3 200</div>
+      <div class="lbl">Artisans</div>
+    </div>
+    <div class="badge-card">
+      <div class="num">4.8 ⭐</div>
+      <div class="lbl">Note moy.</div>
+    </div>
+  </div>
+</div>
+
+<div class="banners">
+  <div class="banner maroc">
+    <h3>Maroc 🇲🇦</h3>
+    <p>Cuir de Fès, poterie de Safi, tapis de Azilal…</p>
+    <button class="banner-btn">Voir les boutiques</button>
+    <span class="banner-emoji">🏺</span>
+  </div>
+  <div class="banner algerie">
+    <h3>Algérie 🇩🇿</h3>
+    <p>Bijoux berbères, burnous, huile d'argan kabyle…</p>
+    <button class="banner-btn">Voir les boutiques</button>
+    <span class="banner-emoji">💎</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">🔥 Produits tendance</div>
+    <a class="see-all">Voir tout →</a>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-chip active" onclick="filterChip(this)">Tous les pays</button>
+    <button class="filter-chip" onclick="filterChip(this)">🇲🇦 Maroc seulement</button>
+    <button class="filter-chip" onclick="filterChip(this)">🇩🇿 Algérie seulement</button>
+    <button class="filter-chip" onclick="filterChip(this)">Moins de 200 MAD</button>
+    <button class="filter-chip" onclick="filterChip(this)">Coup de cœur</button>
+  </div>
+
+  <div class="products-grid" id="productsGrid"></div>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-header">
+    <div class="section-title">✨ Nouveautés</div>
+    <a class="see-all">Voir tout →</a>
+  </div>
+  <div class="products-grid" id="newGrid"></div>
+</div>
+
+<div class="footer">
+  <strong>سوق Souk+</strong> — La marketplace authentique du Maghreb<br>
+  © 2025 · Fake Shop · Fait avec ❤️ pour l'artisanat marocain &amp; algérien
+</div>
+
+<div class="cart-toast" id="cartToast">✅ Ajouté au panier !</div>
+
+<script>
+const products = [
+  { id:1, emoji:'🏺', name:'Tajine en poterie de Safi', seller:'Fatima Ceramics', price:280, currency:'MAD', country:'🇲🇦', cat:'artisanat', stars:5, badge:'promo' },
+  { id:2, emoji:'🧕', name:'Haïk kabyle brodé main', seller:'Tiziri Tissage', price:4200, currency:'DA', country:'🇩🇿', cat:'mode', stars:5, badge:'new' },
+  { id:3, emoji:'💍', name:'Bague berbère argent massif', seller:'Ateliers Tamazight', price:650, currency:'MAD', country:'🇲🇦', cat:'bijoux', stars:4, badge:null },
+  { id:4, emoji:'🫙', name:'Ras el hanout artisanal 200g', seller:'Épices Marrakech', price:85, currency:'MAD', country:'🇲🇦', cat:'epicerie', stars:5, badge:'promo' },
+  { id:5, emoji:'🪔', name:'Lanterne en cuivre de Fès', seller:'Brahim Laiton', price:340, currency:'MAD', country:'🇲🇦', cat:'maison', stars:4, badge:null },
+  { id:6, emoji:'🌿', name:'Savon beldi naturel (lot 3)', seller:'Hammam Authentique', price:1200, currency:'DA', country:'🇩🇿', cat:'beaute', stars:5, badge:'new' },
+  { id:7, emoji:'🎨', name:'Zellige fait main, tableau 30×30', seller:'Mosaïque de Meknès', price:490, currency:'MAD', country:'🇲🇦', cat:'artisanat', stars:5, badge:null },
+  { id:8, emoji:'👘', name:'Djellaba homme soie', seller:'Boutique El Borj', price:7500, currency:'DA', country:'🇩🇿', cat:'mode', stars:4, badge:null },
+  { id:9, emoji:'🍯', name:'Miel de jujubier du Rif', seller:'Abeilles du Nord', price:150, currency:'MAD', country:'🇲🇦', cat:'epicerie', stars:5, badge:null },
+  { id:10, emoji:'🪴', name:'Panier en palmier tressé', seller:'Artisanes Oujda', price:120, currency:'MAD', country:'🇲🇦', cat:'maison', stars:4, badge:null },
+  { id:11, emoji:'💄', name:'Henné naturel poudre 100g', seller:'Henné Pur Alger', price:800, currency:'DA', country:'🇩🇿', cat:'beaute', stars:5, badge:null },
+  { id:12, emoji:'📿', name:'Msaha en argent gravé', seller:'Artisan Tlemcen', price:3200, currency:'DA', country:'🇩🇿', cat:'bijoux', stars:5, badge:'new' },
+];
+
+const newProducts = [
+  { id:13, emoji:'🥘', name:'Couscous premium Berbère 1kg', seller:'Moulin du Souf', price:950, currency:'DA', country:'🇩🇿', cat:'epicerie', stars:5, badge:'new' },
+  { id:14, emoji:'🪞', name:'Miroir en marqueterie de thuya', seller:'Bois de Mogador', price:780, currency:'MAD', country:'🇲🇦', cat:'maison', stars:4, badge:'new' },
+  { id:15, emoji:'🧶', name:'Burnous laine traditionnelle', seller:'Tisserands de Batna', price:12000, currency:'DA', country:'🇩🇿', cat:'mode', stars:5, badge:'new' },
+  { id:16, emoji:'🫖', name:'Théière ciselée 1L', seller:'Cuivre de Taza', price:220, currency:'MAD', country:'🇲🇦', cat:'artisanat', stars:5, badge:'new' },
+];
+
+let cartCount = 0;
+
+function starsHtml(n) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function renderCard(p) {
+  let badgeHtml = '';
+  if (p.badge === 'new') badgeHtml = '<span class="badge-new">Nouveau</span>';
+  else if (p.badge === 'promo') badgeHtml = '<span class="badge-promo">Promo</span>';
+  else badgeHtml = '<span class="product-country">' + p.country + '</span>';
+
+  return `
+    <div class="product-card" data-cat="${p.cat}">
+      <div class="product-img">
+        ${badgeHtml}
+        <span style="font-size:52px">${p.emoji}</span>
+        <span class="product-fav" onclick="toggleFav(this)">🤍</span>
+      </div>
+      <div class="product-info">
+        <div class="stars">${starsHtml(p.stars)}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-seller">Par ${p.seller} ${p.country}</div>
+        <div class="product-bottom">
+          <div>
+            <span class="product-price">${p.price}</span>
+            <span class="product-currency">${p.currency}</span>
+          </div>
+          <button class="add-btn" onclick="addToCart()">+ Panier</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+document.getElementById('productsGrid').innerHTML = products.map(renderCard).join('');
+document.getElementById('newGrid').innerHTML = newProducts.map(renderCard).join('');
+
+function addToCart() {
+  cartCount++;
+  document.getElementById('cartBtn').textContent = '🛒 Panier (' + cartCount + ')';
+  const toast = document.getElementById('cartToast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2000);
+}
+
+function toggleFav(el) {
+  el.textContent = el.textContent === '🤍' ? '❤️' : '🤍';
+}
+
+function filterCat(cat, btn) {
+  document.querySelectorAll('.category-bar button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#productsGrid .product-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+function filterChip(btn) {
+  document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
